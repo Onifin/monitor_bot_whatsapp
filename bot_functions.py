@@ -1,9 +1,14 @@
 import requests
+from dotenv import load_dotenv
+import os
+
+#Carregando variáveis de ambiente
+load_dotenv()
 
 # Variáveis necessárias
 
-access_token = "access_token"
-bot_number_id = "bot_number_id"
+access_token = os.environ["TOKEN"]
+bot_number_id = os.environ['NUMBER_ID']
 
 url = f"https://graph.facebook.com/v17.0/{bot_number_id}/messages"
 

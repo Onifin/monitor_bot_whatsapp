@@ -1,5 +1,9 @@
 from flask import Flask, jsonify, request
-from heyoo import WhatsApp
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+#from heyoo import WhatsApp
 
 from bot_functions import send_message
 
@@ -20,7 +24,7 @@ def teste():
     #messenger = WhatsApp(token=TOKEN, phone_number_id=PHONE_NUMBER_ID)
     #messenger.send_message(mensagem, "numero")
 
-    send_message(mensagem, "5584987880923")
+    send_message(mensagem, os.environ['MY_NUMBER'])
 
     return "<p>TESTE4</p>"
 
@@ -33,5 +37,3 @@ def webhook():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
