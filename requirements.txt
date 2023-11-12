@@ -1,0 +1,4 @@
+requests
+Flask
+python-dotenv
+urllib3==1.26.6

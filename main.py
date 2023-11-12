@@ -2,8 +2,8 @@ from flask import Flask, jsonify, request
 from dotenv import load_dotenv
 import os
 
+#carregando dados do dotenv
 load_dotenv()
-#from heyoo import WhatsApp
 
 from bot_functions import send_message
 
@@ -18,20 +18,27 @@ mensagem = "Bem-vindo ao AVE - Seu Assistente Virtual Educacional!"
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def teste():
 
-    #messenger = WhatsApp(token=TOKEN, phone_number_id=PHONE_NUMBER_ID)
-    #messenger.send_message(mensagem, "numero")
+    #send_message(mensagem, os.environ['MY_NUMBER'])
 
-    send_message(mensagem, os.environ['MY_NUMBER'])
+    if request.method == 'GET':
+        args = request.args
+        args = args.to_dict()
+        print("GET")
+        return(args['hub.challenge'])
+    
+    print("dfhdsfhdsfh")
+    
+    
 
-    return "<p>TESTE4</p>"
+
 
 #webhook para receber mensagens
-@app.route('/webhook', methods=['POST'])
+@app.route('/webhook', methods=['GET'])
 def webhook():
-    if request.method == 'POST':
+    if request.method == 'GET':
         print("Data received from Webhook is: ", request.json)
         return "Webhook received!"
 
