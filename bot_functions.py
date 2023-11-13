@@ -34,3 +34,5 @@ def send_message(message, number):
     print("Mensagem enviada com sucesso.")
   else:
     print("Erro ao enviar mensagem: {}".format(response.status_code))
+
+  return response.status_code

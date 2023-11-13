@@ -18,8 +18,8 @@ mensagem = "Bem-vindo ao AVE - Seu Assistente Virtual Educacional!"
 
 app = Flask(__name__)
 
-@app.route("/", methods=['GET', 'POST'])
-def teste():
+@app.route("/", methods=['GET'])
+def get():
 
     #send_message(mensagem, os.environ['MY_NUMBER'])
 
@@ -29,11 +29,14 @@ def teste():
         print("GET")
         return(args['hub.challenge'])
     
-    print("dfhdsfhdsfh")
+@app.route("/", methods=['POST'])
+def post():
+
+    print("REQUEST --------------------------------------> ", request.json)
+    send_message(mensagem, os.environ['MY_NUMBER'])
+    return(jsonify(request.json))
     
     
-
-
 
 #webhook para receber mensagens
 @app.route('/webhook', methods=['GET'])
