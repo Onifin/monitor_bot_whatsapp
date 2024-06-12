@@ -1,38 +1,36 @@
 import requests
 from dotenv import load_dotenv
 import os
+import json
 
 #Carregando variáveis de ambiente
 load_dotenv()
 
 # Variáveis necessárias
 
-access_token = os.environ["TOKEN"]
+access_token = os.environ['TOKEN_WPP']
 bot_number_id = os.environ['NUMBER_ID']
 
-url = f"https://graph.facebook.com/v17.0/{bot_number_id}/messages"
+url = f"https://graph.facebook.com/v18.0/{bot_number_id}/messages"
 
-def send_message(message, number):
-  # Cria o cabeçalho da requisição
+def send_message(number, message):
   headers = {
-    "Authorization": "Bearer {}".format(access_token),
-    "Content-Type": "application/json",
+      "Authorization": "Bearer " + access_token,
+      "Content-Type": "application/json"
   }
 
-  # Cria o corpo da requisição
   data = {
     "messaging_product": "whatsapp",
+    "recipient_type": "individual",
     "to": number,
-    "text": {"body": message}
+    "type": "text",
+    
+    "text": {
+      "preview_url": False,
+      "body": message
+    }
   }
 
-  # Faz a requisição
-  response = requests.post(url, headers=headers, json=data)
+  response = requests.post(url, headers=headers, data=json.dumps(data))
 
-  # Processa a resposta da requisição
-  if response.status_code == 200:
-    print("Mensagem enviada com sucesso.")
-  else:
-    print("Erro ao enviar mensagem: {}".format(response.status_code))
-
-  return response.status_code
+  return response

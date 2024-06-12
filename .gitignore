@@ -1,2 +1,3 @@
-wbot/
+venv/
 .env
+bot_api.py
